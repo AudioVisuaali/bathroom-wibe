@@ -3,24 +3,27 @@ import playSound, { type Player } from "play-sound";
 
 export class Ambient {
 	private player: Player | null;
-	private clearTimeout: NodeJS.Timeout | null = null;
+	private timeout: NodeJS.Timeout | null = null;
 
 	constructor() {
 		this.player = null;
 	}
 
 	public start() {
+		this.clearTimeout();
+
 		if (this.player) {
 			return;
 		}
 		const instance = playSound();
 		const filename = path.join(__dirname, "../sounds/meditative-1.mp3");
 		const startAt = getRandom();
+		console.log(filename);
 
 		const options = {
 			afplay: [],
 			// Magic number(audio frames) for mpg321 to start at a specific time in seconds
-			mpg321: ["-k", String(startAt * Math.floor(38.28))],
+			mpg321: ["-k", String(Math.floor(startAt * 38.28))],
 		};
 
 		this.player = instance.play(filename, options, (err) => {
@@ -32,13 +35,18 @@ export class Ambient {
 		});
 	}
 
+	private clearTimeout() {
+		if (!this.timeout) {
+			return;
+		}
+
+		console.info("Clearing timeout");
+		clearTimeout(this.timeout);
+		this.timeout = null;
+	}
+
 	private clearPlayer = () => {
 		console.info("Clearing ambient player");
-		if (this.clearTimeout) {
-			console.info("Clearing timeout");
-			clearTimeout(this.clearTimeout);
-			this.clearTimeout = null;
-		}
 
 		if (this.player) {
 			console.info("Killing player");
@@ -48,7 +56,10 @@ export class Ambient {
 	};
 
 	public end() {
-		this.clearTimeout = setTimeout(this.clearPlayer, 60_000);
+		this.timeout = setTimeout(() => {
+			this.clearPlayer();
+			this.clearTimeout();
+		}, 60_000);
 	}
 }
 
