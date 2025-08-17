@@ -18,7 +18,7 @@ export class Ambient {
 		const startAt = getRandom();
 
 		const options = {
-			afplay: ["-t", String(startAt)],
+			afplay: [],
 			// Magic number(audio frames) for mpg321 to start at a specific time in seconds
 			mpg321: ["-k", String(startAt * Math.floor(38.28))],
 		};
@@ -29,29 +29,30 @@ export class Ambient {
 			} else {
 				console.log("Ambient sound is playing");
 			}
-			this.player = null;
 		});
 	}
 
-	private clearPlayer() {
+	private clearPlayer = () => {
+		console.info("Clearing ambient player");
 		if (this.clearTimeout) {
+			console.info("Clearing timeout");
 			clearTimeout(this.clearTimeout);
 			this.clearTimeout = null;
 		}
 
 		if (this.player) {
+			console.info("Killing player");
 			this.player.kill();
 			this.player = null;
 		}
-	}
+	};
 
 	public end() {
-		this.clearTimeout = setTimeout(this.clearPlayer, 30_000);
+		this.clearTimeout = setTimeout(this.clearPlayer, 60_000);
 	}
 }
 
 function getRandom(min = 10, max = 120): number {
 	const randomStart = Math.floor(Math.random() * (max - min + 1)) + min;
-	console.log(randomStart);
 	return randomStart;
 }
