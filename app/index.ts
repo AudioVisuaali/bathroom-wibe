@@ -25,7 +25,6 @@ new HUEMotionSensor({
 });
 
 console.log("Wibing");
-ambient.start();
 
 const notification = new Notification();
 notification.notify();
