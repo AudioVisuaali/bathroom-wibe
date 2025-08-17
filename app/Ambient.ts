@@ -25,6 +25,7 @@ export class Ambient {
 			// Magic number(audio frames) for mpg321 to start at a specific time in seconds
 			mpg123: ["-k", String(Math.floor(startAt * 38.28)), "-b", String(4096)],
 		};
+		console.log(options);
 
 		this.player = instance.play(filename, options, (err) => {
 			if (err) {
