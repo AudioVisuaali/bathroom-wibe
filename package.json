@@ -1,35 +1,37 @@
 {
-	"name": "bathroom-wibe",
-	"version": "1.0.0",
-	"main": "index.js",
-	"scripts": {
-		"dev": "tsx watch --env-file=.env app/index.ts",
-		"build": "tsc --project tsconfig.json",
-		"test": "echo \"Error: no test specified\" && exit 1",
-		"lint": "biome check ./",
-		"lint:fix": "biome check --write --unsafe ./"
-	},
-	"repository": {
-		"type": "git",
-		"url": "git+https://github.com/AudioVisuaali/bathroom-wibe.git"
-	},
-	"author": "",
-	"license": "ISC",
-	"bugs": {
-		"url": "https://github.com/AudioVisuaali/bathroom-wibe/issues"
-	},
-	"homepage": "https://github.com/AudioVisuaali/bathroom-wibe#readme",
-	"description": "",
-	"devDependencies": {
-		"@biomejs/biome": "^2.2.0",
-		"@types/node": "^24.3.0",
-		"tsx": "^4.20.4",
-		"typescript": "^5.9.2"
-	},
-	"dependencies": {
-		"axios": "^1.11.0",
-		"find-exec": "^1.0.3",
-		"play-sound": "^1.1.6",
-		"zod": "^4.0.17"
-	}
+  "name": "bathroom-wibe",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "dev": "tsx watch --env-file=.env app/index.ts",
+    "build": "tsc --project tsconfig.json",
+    "start": "node --env-file=.env build/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "biome check ./",
+    "lint:fix": "biome check --write --unsafe ./"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AudioVisuaali/bathroom-wibe.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AudioVisuaali/bathroom-wibe/issues"
+  },
+  "homepage": "https://github.com/AudioVisuaali/bathroom-wibe#readme",
+  "description": "",
+  "devDependencies": {
+    "@biomejs/biome": "^2.2.0",
+    "@types/find-exec": "^1.0.2",
+    "@types/node": "^24.3.0",
+    "tsx": "^4.20.4",
+    "typescript": "^5.9.2"
+  },
+  "dependencies": {
+    "axios": "^1.11.0",
+    "find-exec": "^1.0.3",
+    "play-sound": "^1.1.6",
+    "zod": "^4.0.17"
+  }
 }
