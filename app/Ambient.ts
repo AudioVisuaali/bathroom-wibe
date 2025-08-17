@@ -15,15 +15,14 @@ export class Ambient {
 		if (this.player) {
 			return;
 		}
-		const instance = playSound();
-		const filename = path.join(__dirname, "../sounds/meditative-1.mp3");
-		const startAt = getRandom();
-		console.log(filename);
 
+		const { filename, startAt } = getSound();
+		const instance = playSound();
 		const options = {
+			players: ["afplay", "play"],
 			afplay: [],
 			// Magic number(audio frames) for mpg321 to start at a specific time in seconds
-			mpg123: ["-k", String(Math.floor(startAt * 38.28)), "-b", String(4096)],
+			play: ["trim", `${startAt}`],
 		};
 		console.log(options);
 
@@ -62,6 +61,18 @@ export class Ambient {
 			this.clearTimeout();
 		}, 60_000);
 	}
+}
+
+type Sound = {
+	filename: string;
+	startAt: number;
+};
+
+function getSound(): Sound {
+	return {
+		filename: path.join(__dirname, "../sounds/meditative-1.mp3"),
+		startAt: getRandom(10, 120),
+	};
 }
 
 function getRandom(min = 10, max = 120): number {
