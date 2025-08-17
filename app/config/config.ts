@@ -1,11 +1,11 @@
-import { ConfigHUE, createConfigHUE } from "./configHUE";
+import { type ConfigHUE, createConfigHUE } from "./configHUE";
 
 export type Config = {
-  hue: ConfigHUE;
+	hue: ConfigHUE;
 };
 
 export function createConfig(): Config {
-  return {
-    hue: createConfigHUE(),
-  };
+	return {
+		hue: createConfigHUE(),
+	};
 }

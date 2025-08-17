@@ -1,6 +1,6 @@
 import { z } from "zod";
-import { HUEClient } from "./hueClient";
 import { toFailure, toSuccess } from "../validation";
+import type { HUEClient } from "./hueClient";
 
 type OnUpdateFunction = (state: State) => void;
 
@@ -46,6 +46,12 @@ export class HUEMotionSensor {
 			presence: result.value.state.presence,
 			lastUpdated: result.value.state.lastupdated,
 		};
+
+		if (hasUpdated) {
+			console.log(
+				`Sensor ${this.sensorId} updated: presence=${this.state.presence}, lastUpdated=${this.state.lastUpdated}`,
+			);
+		}
 
 		if (hasUpdated && this.onUpdate) {
 			this.onUpdate(this.state);

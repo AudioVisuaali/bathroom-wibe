@@ -1,5 +1,5 @@
 import path from "node:path";
-import playSound, { Player } from "play-sound";
+import playSound, { type Player } from "play-sound";
 
 export class Ambient {
 	private player: Player | null;

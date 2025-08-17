@@ -1,17 +1,15 @@
 {
-  "compilerOptions": {
-    "target": "es6",
-    "module": "commonjs",
-    "strict": true,
-    "esModuleInterop": true,
-    "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true,
-    "outDir": "./build",
-    "rootDir": "./app",
-    "removeComments": true,
-    "sourceMap": false
-  },
-  "exclude": ["node_modules", "build"]
+	"compilerOptions": {
+		"target": "es6",
+		"module": "commonjs",
+		"strict": true,
+		"esModuleInterop": true,
+		"skipLibCheck": true,
+		"forceConsistentCasingInFileNames": true,
+		"outDir": "./build",
+		"rootDir": "./app",
+		"removeComments": true,
+		"sourceMap": false
+	},
+	"exclude": ["node_modules", "build"]
 }
-
-

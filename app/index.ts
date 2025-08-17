@@ -1,13 +1,14 @@
 import { Ambient } from "./Ambient";
 import { createConfig } from "./config/config";
-import { createHUEClient } from "./hue/hueClient";
 import { HUEMotionSensor } from "./hue/HUESensorMotion";
+import { createHUEClient } from "./hue/hueClient";
+import { Notification } from "./Notification";
 
 const config = createConfig();
 
 const hueClient = createHUEClient({ configHUE: config.hue });
 const ambient = new Ambient();
-const sensor = new HUEMotionSensor({
+new HUEMotionSensor({
 	hueClient,
 	sensorId: config.hue.sensors.bathroom,
 	onUpdate: (state) => {
@@ -19,8 +20,7 @@ const sensor = new HUEMotionSensor({
 	},
 });
 
-ambient.start();
-setTimeout(() => {
-	ambient.end();
-}, 1000);
-console.log("Configuration initialized:", config);
+console.log("Wibing");
+
+const notification = new Notification();
+notification.notify();

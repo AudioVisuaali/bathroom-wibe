@@ -1,5 +1,5 @@
 import axios, { type AxiosInstance } from "axios";
-import { ConfigHUE } from "../config/configHUE";
+import type { ConfigHUE } from "../config/configHUE";
 
 export type HUEClient = AxiosInstance;
 
