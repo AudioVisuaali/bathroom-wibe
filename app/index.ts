@@ -3,6 +3,10 @@ import { createConfig } from "./config/config";
 import { HUEMotionSensor } from "./hue/HUESensorMotion";
 import { createHUEClient } from "./hue/hueClient";
 import { Notification } from "./Notification";
+import { getFoundPlayer } from "./player";
+
+const player = getFoundPlayer();
+console.log("Found player:", player);
 
 const config = createConfig();
 
