@@ -2,11 +2,12 @@ import { Ambient } from "./Ambient";
 import { createConfig } from "./config/config";
 import { HUEMotionSensor } from "./hue/HUESensorMotion";
 import { createHUEClient } from "./hue/hueClient";
-import { Notification } from "./Notification";
 import { getFoundPlayer } from "./player";
+import { Sound } from "./Sound";
+import { sound } from "./sounds";
 
-const player = getFoundPlayer();
-console.log("Found player:", player);
+console.log(`Found player: ${getFoundPlayer()}`);
+console.log(`Current time: ${new Date().toLocaleTimeString()}`);
 
 const config = createConfig();
 
@@ -24,7 +25,7 @@ new HUEMotionSensor({
 	},
 });
 
-console.log("Wibing");
+console.log("Waiting for input...");
 
-const notification = new Notification();
-notification.notify();
+const notification = new Sound(sound.notification);
+notification.play();

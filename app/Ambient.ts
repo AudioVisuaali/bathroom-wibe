@@ -1,38 +1,25 @@
-import path from "node:path";
-import playSound, { type Player } from "play-sound";
+import { Sound } from "./Sound";
+import { getSoundRandomStartingPoint, sound } from "./sounds";
 
 export class Ambient {
-	private player: Player | null;
+	private sound: Sound | null;
 	private timeout: NodeJS.Timeout | null = null;
 
 	constructor() {
-		this.player = null;
+		this.sound = null;
 	}
 
 	public start() {
 		this.clearTimeout();
 
-		if (this.player) {
+		if (this.sound) {
 			return;
 		}
 
-		const { filename, startAt } = getSound();
-		const instance = playSound();
-		const options = {
-			players: ["afplay", "play"],
-			afplay: [],
-			// Magic number(audio frames) for mpg321 to start at a specific time in seconds
-			play: ["trim", `${startAt}`],
-		};
-		console.log(options);
+		const { sound, startAt } = getSound();
 
-		this.player = instance.play(filename, options, (err) => {
-			if (err) {
-				console.error("Error playing sound:", err);
-			} else {
-				console.log("Ambient sound is playing");
-			}
-		});
+		this.sound = sound;
+		this.sound.play(startAt);
 	}
 
 	private clearTimeout() {
@@ -48,10 +35,10 @@ export class Ambient {
 	private clearPlayer = () => {
 		console.info("Clearing ambient player");
 
-		if (this.player) {
+		if (this.sound) {
 			console.info("Killing player");
-			this.player.kill();
-			this.player = null;
+			this.sound.end();
+			this.sound = null;
 		}
 	};
 
@@ -59,23 +46,47 @@ export class Ambient {
 		this.timeout = setTimeout(() => {
 			this.clearPlayer();
 			this.clearTimeout();
-		}, 60_000);
+		}, 120_000);
 	}
 }
 
-type Sound = {
-	filename: string;
+type SoundWithOptions = {
+	sound: Sound;
 	startAt: number;
 };
 
-function getSound(): Sound {
+function getSound(): SoundWithOptions {
+	if (isTimeForEyeOfTheTiger()) {
+		return {
+			sound: new Sound(sound.eyeOfTheTiger),
+			startAt: 0,
+		};
+	}
+
 	return {
-		filename: path.join(__dirname, "../sounds/meditative-1.mp3"),
-		startAt: getRandom(10, 120),
+		sound: new Sound(sound.meditative),
+		startAt: getSoundRandomStartingPoint(sound.meditative),
 	};
 }
 
-function getRandom(min = 10, max = 120): number {
-	const randomStart = Math.floor(Math.random() * (max - min + 1)) + min;
-	return randomStart;
+let letTimeEyeOfTheTigerWasPlayer: string | null = null;
+
+function isTimeForEyeOfTheTiger() {
+	const now = new Date();
+	const currentDay = now.getDay();
+	if (![1, 2, 3, 4, 5].includes(currentDay)) {
+		return false;
+	}
+
+	const currentHour = now.getHours();
+	if (!(currentHour === 18 || currentHour === 10 || currentHour === 18)) {
+		return false;
+	}
+
+	if (now.toDateString() === letTimeEyeOfTheTigerWasPlayer) {
+		return false;
+	}
+
+	letTimeEyeOfTheTigerWasPlayer = now.toDateString();
+	return true;
 }
