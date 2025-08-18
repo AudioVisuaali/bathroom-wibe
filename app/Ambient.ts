@@ -1,5 +1,6 @@
 import { Sound } from "./Sound";
 import { getSoundRandomStartingPoint, sound } from "./sounds";
+import { getTimeFinland } from "./time";
 
 export class Ambient {
 	private sound: Sound | null;
@@ -72,14 +73,14 @@ function getSound(): SoundWithOptions {
 let letTimeEyeOfTheTigerWasPlayer: string | null = null;
 
 function isTimeForEyeOfTheTiger() {
-	const now = new Date();
+	const now = getTimeFinland();
 	const currentDay = now.getDay();
 	if (![1, 2, 3, 4, 5].includes(currentDay)) {
 		return false;
 	}
 
 	const currentHour = now.getHours();
-	if (!(currentHour === 18 || currentHour === 10 || currentHour === 18)) {
+	if (!(currentHour === 9 || currentHour === 10)) {
 		return false;
 	}
 

@@ -5,9 +5,10 @@ import { createHUEClient } from "./hue/hueClient";
 import { getFoundPlayer } from "./player";
 import { Sound } from "./Sound";
 import { sound } from "./sounds";
+import { getTimeFinland } from "./time";
 
 console.log(`Found player: ${getFoundPlayer()}`);
-console.log(`Current time: ${new Date().toLocaleTimeString()}`);
+console.log(`Current time: ${getTimeFinland().toLocaleTimeString()}`);
 
 const config = createConfig();
 
@@ -26,6 +27,7 @@ new HUEMotionSensor({
 });
 
 console.log("Waiting for input...");
+ambient.start();
 
 const notification = new Sound(sound.notification);
 notification.play();
