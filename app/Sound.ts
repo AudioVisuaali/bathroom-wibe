@@ -1,3 +1,4 @@
+import findExec from "find-exec";
 import playSound, { type Player } from "play-sound";
 import type { SoundMetadata } from "./sounds";
 
@@ -11,18 +12,19 @@ export class Sound {
 	}
 
 	public play(startAtSeconds: number = 0) {
-		const instance = playSound();
-		const options = {
-			players: ["afplay", "play"],
-			afplay: [],
-			play: ["trim", `${startAtSeconds}`],
-		};
+		const instance = playSound({ players: ["mpg123"] });
 
-		this.player = instance.play(this.sound.path, options, (err) => {
-			if (err) {
-				console.error("Error playing sound:", err);
-			}
-		});
+		this.player = instance.play(
+			this.sound.path,
+			{ mpg123: ["-k", `${startAtSeconds * 38}`] },
+			this.handleFinish,
+		);
+	}
+
+	private handleFinish(error: Error | null) {
+		if (error) {
+			console.error("Error playing sound:", error);
+		}
 	}
 
 	public end() {
@@ -32,4 +34,14 @@ export class Sound {
 
 		this.player.kill();
 	}
+}
+
+export function validatePlayerExists() {
+	const result = findExec(["mpg123"]);
+	if (!result) {
+		throw new Error(
+			"mpg123 not found, please install it to use this application",
+		);
+	}
+	return result;
 }

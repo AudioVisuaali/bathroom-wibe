@@ -7,6 +7,7 @@ declare module "play-sound" {
 
 	type PlayParams = {
 		afplay?: string[];
+		mpg123?: string[];
 		mpg321?: string[];
 	};
 
@@ -14,9 +15,9 @@ declare module "play-sound" {
 		play: (
 			file: string,
 			params: PlayParams,
-			callback: (error?: Error) => void,
+			callback: (error: Error | null) => void,
 		) => Player;
 	}
-	function playSound(): Instance;
+	function playSound(params?: { players?: string[] }): Instance;
 	export default playSound;
 }

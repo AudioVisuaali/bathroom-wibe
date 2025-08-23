@@ -47,7 +47,7 @@ export class Ambient {
 		this.timeout = setTimeout(() => {
 			this.clearPlayer();
 			this.clearTimeout();
-		}, 120_000);
+		}, 90);
 	}
 }
 
@@ -64,10 +64,21 @@ function getSound(): SoundWithOptions {
 		};
 	}
 
+	if (!isNightTime()) {
+		return {
+			sound: new Sound(sound.meditative),
+			startAt: getSoundRandomStartingPoint(sound.meditative),
+		};
+	}
+
 	return {
-		sound: new Sound(sound.meditative),
-		startAt: getSoundRandomStartingPoint(sound.meditative),
+		sound: new Sound(sound.lofi),
+		startAt: getSoundRandomStartingPoint(sound.lofi),
 	};
+}
+
+function isNightTime() {
+	return getTimeFinland().getHours() >= 22 || new Date().getHours() < 6;
 }
 
 let letTimeEyeOfTheTigerWasPlayer: string | null = null;
