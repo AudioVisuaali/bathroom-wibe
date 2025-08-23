@@ -47,7 +47,7 @@ export class Ambient {
 		this.timeout = setTimeout(() => {
 			this.clearPlayer();
 			this.clearTimeout();
-		}, 90);
+		}, 90_000);
 	}
 }
 
@@ -64,7 +64,7 @@ function getSound(): SoundWithOptions {
 		};
 	}
 
-	if (!isNightTime()) {
+	if (isNightTime()) {
 		return {
 			sound: new Sound(sound.meditative),
 			startAt: getSoundRandomStartingPoint(sound.meditative),
